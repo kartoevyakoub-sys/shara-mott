@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="inh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ШАЬРА МОТТ — Древний эпос</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Philosopher:wght@700&family=Inter:wght@500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="epic-app">
+    <i class="fa-solid fa-sun corner-medal top-left"></i>
+    <i class="fa-solid fa-sun corner-medal top-right"></i>
+
+    <!-- ВЕРХНЯЯ ШАПКА -->
+    <header class="top-header">
+        <button class="icon-btn" onclick="openModal('rules-modal')" title="Правила">
+            <i class="fa-solid fa-scroll"></i>
+        </button>
+        <h1 class="epic-title">ШАЬРА МОТТ</h1>
+        <button class="icon-btn" onclick="openModal('settings-modal')" title="Настройки">
+            <i class="fa-solid fa-gear"></i>
+        </button>
+    </header>
+
+    <!-- СЧЕТ КОМАНД И БАШНЯ -->
+    <section class="scoreboard-epos">
+        <div class="team-stat active" id="team-panel-0">
+            <span class="team-label" id="team-name-0">ТОАБА 1</span>
+            <span class="team-pts" id="score-0">0</span>
+        </div>
+
+        <div class="center-tower-timer">
+            <i class="fa-solid fa-chess-rook tower-bg-icon"></i>
+            <div class="timer-badge" id="timer-display">60</div>
+        </div>
+
+        <div class="team-stat" id="team-panel-1">
+            <span class="team-label" id="team-name-1">ТОАБА 2</span>
+            <span class="team-pts" id="score-1">0</span>
+        </div>
+    </section>
+
+    <!-- КАРТОЧКА -->
+    <main class="card-stage">
+        <div class="parchment-card" id="game-card" onclick="if(!state.isPlaying) startRound()">
+            <div class="parchment-inner-border">
+                <div id="card-cover" class="card-content">
+                    <i class="fa-solid fa-chess-rook card-tower-icon"></i>
+                    <div class="card-word-ing">ДӀАДОЛАДЕ</div>
+                    <div class="card-word-ru" id="turn-prompt">Ход: Тоаба 1. Нажмите для старта</div>
+                    <div class="card-points-label">СТАРТ РАУНДА</div>
+                </div>
+
+                <div id="card-active" class="card-content hidden">
+                    <i class="fa-solid fa-chess-rook card-tower-icon"></i>
+                    <div class="card-word-ing" id="word-ing">ГӀАЛА</div>
+                    <div class="card-word-ru" id="word-ru">Башня</div>
+                    <div class="card-points-label" id="word-pts">+1 БАЛЛ</div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- ПУЛЬТ УПРАВЛЕНИЯ (Кнопки угадывания, пропуска и завершения) -->
+    <!-- ПУЛЬТ УПРАВЛЕНИЯ (Перехват очков и пропуск) -->
+    <section class="controls-panel">
+        <div class="forged-controls">
+            <button class="forged-btn btn-team-left" id="btn-team-0" onclick="scorePoint(0)" disabled>
+                <i class="fa-solid fa-check"></i> Тоаба 1 (+1)
+            </button>
+            <button class="forged-btn btn-team-right" id="btn-team-1" onclick="scorePoint(1)" disabled>
+                <i class="fa-solid fa-check"></i> Тоаба 2 (+1)
+            </button>
+        </div>
+        <div class="forged-controls">
+            <button class="forged-btn btn-tekhadita" id="btn-skip" onclick="scorePoint(null)" disabled>
+                <i class="fa-solid fa-xmark"></i> ТӀЕХЬАДИТА (ПРОПУСК)
+            </button>
+            <button class="forged-btn btn-endgame" onclick="openModal('endgame-modal')">
+                <i class="fa-solid fa-flag-checkered"></i> СОЦАДЕ
+            </button>
+        </div>
+    </section>
+
+    <!-- НИЖНЯЯ ПАНЕЛЬ -->
+    <nav class="bottom-nav">
+        <button class="nav-icon-btn" onclick="openModal('decks-modal')" title="Категории слов">
+            <i class="fa-solid fa-table-cells-large"></i>
+        </button>
+        <button class="nav-icon-btn" onclick="openModal('settings-modal')" title="Параметры">
+            <i class="fa-solid fa-sliders"></i>
+        </button>
+        <button class="nav-icon-btn" id="quick-sound-btn" onclick="toggleMute()" title="Звук">
+            <i class="fa-solid fa-bell"></i>
+        </button>
+        <button class="nav-icon-btn" onclick="openModal('settings-modal')" title="Настройки">
+            <i class="fa-solid fa-gear"></i>
+        </button>
+    </nav>
+</div>
+
+<!-- МОДАЛЬНОЕ ОКНО: ПОБЕДА / ИТОГИ -->
+<div class="modal-overlay hidden" id="endgame-modal">
+    <div class="stone-modal">
+        <div class="modal-header-plate">
+            <h2>ХЬЯКХАДАКХ</h2>
+            <span>ПОБЕДА & ИТОГИ</span>
+        </div>
+        <div class="endgame-results" id="endgame-results-text"></div>
+        <div class="modal-buttons-row">
+            <button class="forged-btn btn-tekhadita" onclick="closeModals()">ПРОДОЛЖИТЬ</button>
+            <button class="forged-btn btn-khetadir" onclick="resetGame()">ЗАНОВО</button>
+        </div>
+    </div>
+</div>
+
+<!-- МОДАЛЬНОЕ ОКНО: НАСТРОЙКИ (С ЦЕЛЬЮ ПО ОЧКАМ) -->
+<div class="modal-overlay hidden" id="settings-modal">
+    <div class="stone-modal">
+        <div class="modal-header-plate">
+            <h2>НИЙСАДАРАШ</h2>
+            <span>НАСТРОЙКИ</span>
+        </div>
+        <div class="setting-block">
+            <label>ТОАБАШ (КОМАНДЫ)</label>
+            <div class="teams-inputs">
+                <input type="text" id="input-team-0" value="Тоаба 1" maxlength="12">
+                <input type="text" id="input-team-1" value="Тоаба 2" maxlength="12">
+            </div>
+        </div>
+        <div class="setting-block">
+            <label>ЦЕЛЬ ПО ОЧКАМ ДО ПОБЕДЫ</label>
+            <div class="time-shields">
+                <button class="shield-btn active" onclick="selectWinScore(30, this)">30</button>
+                <button class="shield-btn" onclick="selectWinScore(50, this)">50</button>
+                <button class="shield-btn" onclick="selectWinScore(70, this)">70</button>
+            </div>
+        </div>
+        <div class="setting-block">
+            <label>ХАН (ВРЕМЯ РАУНДА)</label>
+            <div class="time-shields">
+                <button class="shield-btn active" onclick="selectTime(60, this)">60с</button>
+                <button class="shield-btn" onclick="selectTime(90, this)">90с</button>
+                <button class="shield-btn" onclick="selectTime(120, this)">120с</button>
+            </div>
+        </div>
+        <button class="forged-btn btn-khetadir full-width" onclick="saveSettings()">
+            ДӀАХЬОАДАЕ (СОХРАНИТЬ)
+        </button>
+    </div>
+</div>
+
+<!-- МОДАЛЬНОЕ ОКНО: ВЫБОР КОЛОДЫ -->
+<div class="modal-overlay hidden" id="decks-modal">
+    <div class="stone-modal">
+        <div class="modal-header-plate">
+            <h2>ТОАБАШ & ТЕМЫ</h2>
+            <span>ВЫБОР СЛОВАРЯ</span>
+        </div>
+        <div class="deck-list">
+            <button class="deck-item active" onclick="selectCategory('all', this)">
+                <i class="fa-solid fa-layer-group"></i> Все слова (Полная колода)
+            </button>
+            <button class="deck-item" onclick="selectCategory('nature', this)">
+                <i class="fa-solid fa-mountain-sun"></i> Природа и стихия
+            </button>
+            <button class="deck-item" onclick="selectCategory('tradition', this)">
+                <i class="fa-solid fa-chess-rook"></i> Культура, быт и традиции
+            </button>
+        </div>
+        <button class="forged-btn btn-khetadir full-width" onclick="closeModals()">ГОТОВО</button>
+    </div>
+</div>
+
+<!-- МОДАЛЬНОЕ ОКНО: ПРАВИЛА -->
+<div class="modal-overlay hidden" id="rules-modal">
+    <div class="stone-modal">
+        <div class="modal-header-plate">
+            <h2>НИЙСАЛ</h2>
+            <span>ПРАВИЛА ИГРЫ</span>
+        </div>
+        <ul class="rules-list">
+            <li><i class="fa-solid fa-check gold-icon"></i> Объясняйте слова команде <b>строго на ингушском языке</b>.</li>
+            <li><i class="fa-solid fa-ban gold-icon"></i> Нельзя использовать русские слова и однокоренные подсказки.</li>
+        </ul>
+        <button class="forged-btn btn-khetadir full-width" onclick="closeModals()">КХЕТАДИР</button>
+    </div>
+</div>
+
+<script src="js/word.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
