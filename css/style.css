@@ -10,33 +10,40 @@
     -webkit-tap-highlight-color: transparent;
 }
 
-body {
-    /* Глубокий, богатый фон с эффектом свечения по центру */
+html, body {
+    width: 100%;
+    min-height: 100%;
     background-color: #020c08;
     background-image: 
-        radial-gradient(circle at 50% 30%, rgba(16, 68, 48, 0.45) 0%, transparent 65%),
-        radial-gradient(circle at 50% 100%, rgba(5, 34, 25, 0.8) 0%, #020c08 100%);
+        radial-gradient(circle at 50% 25%, rgba(16, 68, 48, 0.5) 0%, transparent 70%),
+        radial-gradient(circle at 50% 100%, rgba(5, 34, 25, 0.85) 0%, #020c08 100%);
     color: #f8fafc;
     font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.epic-app-wrapper {
+    width: 100%;
+    min-height: 100vh;
+    min-height: var(--tg-viewport-height, 100dvh);
     display: flex;
     justify-content: center;
     align-items: center;
-    /* Используем переменную Telegram, если она есть, иначе 100vh */
-    min-height: var(--tg-viewport-height, 100vh);
-    padding: 10px;
-    overflow: hidden;
+    padding: env(safe-area-inset-top, 10px) env(safe-area-inset-right, 10px) env(safe-area-inset-bottom, 10px) env(safe-area-inset-left, 10px);
 }
 
 .epic-app {
     width: 100%;
-    max-width: 410px;
-    /* Динамическая высота под Telegram Mini App */
-    height: calc(var(--tg-viewport-height, 100vh) - 20px);
-    max-height: 820px;
-    background: linear-gradient(180deg, rgba(9, 44, 34, 0.9) 0%, rgba(3, 20, 14, 0.95) 100%);
+    max-width: 430px;
+    height: 94vh;
+    height: calc(var(--tg-viewport-height, 100dvh) - 20px);
+    max-height: 840px;
+    min-height: 560px;
+    background: linear-gradient(180deg, rgba(9, 44, 34, 0.95) 0%, rgba(3, 20, 14, 0.98) 100%);
     border: 3px solid #d4af37;
-    border-radius: 28px;
-    padding: 14px 16px;
+    border-radius: 26px;
+    padding: 12px 14px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -46,24 +53,24 @@ body {
 
 .corner-medal {
     position: absolute;
-    width: 28px;
-    height: 28px;
+    width: 26px;
+    height: 26px;
     opacity: 0.85;
 }
-.top-left { top: 12px; left: 12px; }
-.top-right { top: 12px; right: 12px; transform: scaleX(-1); }
+.top-left { top: 10px; left: 10px; }
+.top-right { top: 10px; right: 10px; transform: scaleX(-1); }
 
 .top-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 6px 10px;
+    padding: 4px 6px 8px 6px;
     border-bottom: 1px solid rgba(212, 175, 55, 0.3);
 }
 
 .epic-title {
     font-family: 'Philosopher', serif;
-    font-size: 24px;
+    font-size: clamp(20px, 4.5vw, 24px);
     color: var(--gold-bright);
     letter-spacing: 2px;
     text-shadow: 0 2px 6px rgba(0,0,0,0.7);
@@ -75,6 +82,9 @@ body {
     width: 32px;
     height: 32px;
     cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .icon-btn.img-btn img {
     width: 100%;
@@ -82,11 +92,12 @@ body {
     object-fit: contain;
 }
 
+/* СЧЕТ КОМАНД И БАШНЯ */
 .scoreboard-epos {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 4px 10px;
+    padding: 4px 6px;
     position: relative;
 }
 
@@ -94,7 +105,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 6px 4px;
+    padding: 4px;
     border-radius: 12px;
     border: 1px solid transparent;
     transition: 0.25s;
@@ -122,7 +133,7 @@ body {
 
 .team-pts {
     font-family: 'Philosopher', serif;
-    font-size: 24px;
+    font-size: clamp(20px, 4vw, 24px);
     color: var(--gold-bright);
     font-weight: 700;
 }
@@ -138,8 +149,8 @@ body {
 }
 
 .tower-bg-img {
-    width: 45px;
-    height: 65px;
+    width: 40px;
+    height: 58px;
     object-fit: contain;
     opacity: 0.85;
 }
@@ -151,23 +162,25 @@ body {
     border: 2px solid #d4af37;
     color: var(--gold-bright);
     font-weight: 800;
-    font-size: 14px;
+    font-size: 13px;
     padding: 1px 8px;
     border-radius: 99px;
 }
 
+/* КАРТОЧКА СЛОВ */
 .card-stage {
     display: flex;
     justify-content: center;
     align-items: center;
     margin: auto 0;
     position: relative;
+    width: 100%;
 }
 
 .side-bg-ornament {
     position: absolute;
-    width: 50px;
-    height: 150px;
+    width: 42px;
+    height: 130px;
     object-fit: contain;
     opacity: 0.75;
     pointer-events: none;
@@ -175,18 +188,18 @@ body {
     transform: translateY(-50%);
     z-index: 1;
 }
-.left-orn { left: 2px; }
-.right-orn { right: 2px; transform: translateY(-50%) scaleX(-1); }
+.left-orn { left: -4px; }
+.right-orn { right: -4px; transform: translateY(-50%) scaleX(-1); }
 
 .parchment-card {
     width: 100%;
     max-width: 320px;
-    height: 270px;
+    height: 250px;
     background-image: url('../assets/card-bg.png');
     background-size: 100% 100%;
     background-repeat: no-repeat;
     border-radius: 12px;
-    padding: 18px 24px;
+    padding: 14px 18px;
     box-shadow: 0 15px 35px rgba(0,0,0,0.7);
     cursor: pointer;
     display: flex;
@@ -208,61 +221,64 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
+    width: 100%;
 }
 
 .card-tower-img {
-    width: 40px;
-    height: 55px;
+    width: 34px;
+    height: 48px;
     object-fit: contain;
 }
 
 .card-word-ing {
     font-family: 'Philosopher', serif;
-    font-size: 26px;
+    font-size: clamp(20px, 4.5vw, 26px);
     font-weight: 700;
     color: #2b1d0c;
     letter-spacing: 1px;
+    word-break: break-word;
 }
 
 .card-word-ru {
-    font-size: 13px;
+    font-size: clamp(11px, 2.8vw, 13px);
     line-height: 1.3;
     color: #5c431c;
     font-weight: 600;
 }
 
 .card-points-label {
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 800;
     color: #4a3516;
     background: rgba(140, 109, 59, 0.18);
-    padding: 3px 12px;
+    padding: 2px 12px;
     border-radius: 99px;
-    margin-top: 4px;
+    margin-top: 2px;
 }
 
+/* ПУЛЬТ УПРАВЛЕНИЯ */
 .controls-panel {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 6px;
     margin: 4px 0;
 }
 
 .forged-controls {
     display: flex;
-    gap: 10px;
+    gap: 8px;
 }
 
 .forged-btn.btn-img {
     flex: 1;
-    height: 54px;
+    height: 50px;
     background-size: 100% 100%;
     background-repeat: no-repeat;
     background-color: transparent;
     border: none;
     font-family: 'Philosopher', serif;
-    font-size: 12px;
+    font-size: clamp(11px, 2.5vw, 12px);
     font-weight: 700;
     color: #f3cf65;
     letter-spacing: 0.5px;
@@ -272,7 +288,7 @@ body {
     align-items: center;
     text-shadow: 1px 1px 3px rgba(0, 0, 0, 1);
     transition: transform 0.1s;
-    padding: 0 6px;
+    padding: 0 4px;
     text-align: center;
 }
 .forged-btn.btn-img:active:not(:disabled) { transform: scale(0.96); }
@@ -283,14 +299,14 @@ body {
 
 .btn-tekhadita { 
     background-image: url('../assets/btn-red.png'); 
-    font-size: 11px; 
+    font-size: clamp(10px, 2.2vw, 11px); 
     color: #ffffff !important; 
     text-shadow: 0px 2px 4px #000000, 0px 0px 2px #000000 !important; 
     font-weight: 800;
 }
+.btn-endgame { background-image: url('../assets/btn-grey.png'); font-size: clamp(11px, 2.5vw, 12px); }
 
-.btn-endgame { background-image: url('../assets/btn-grey.png'); font-size: 12px; }
-
+/* НИЖНЯЯ ПАНЕЛЬ */
 .bottom-nav {
     display: flex;
     justify-content: space-around;
@@ -302,9 +318,12 @@ body {
 .nav-icon-btn.img-btn {
     background: transparent;
     border: none;
-    width: 30px;
-    height: 30px;
+    width: 28px;
+    height: 28px;
     cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .nav-icon-btn.img-btn img {
     width: 100%;
@@ -312,14 +331,15 @@ body {
     object-fit: contain;
 }
 
+/* МОДАЛЬНЫЕ ОКНА */
 .modal-overlay {
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, 0.78);
+    background: rgba(0, 0, 0, 0.82);
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 16px;
+    padding: 14px;
     z-index: 100;
 }
 
@@ -328,24 +348,24 @@ body {
     max-width: 380px;
     background: linear-gradient(180deg, #16362c 0%, #0a1c16 100%);
     border: 3px solid #d4af37;
-    border-radius: 22px;
-    padding: 18px;
+    border-radius: 20px;
+    padding: 16px;
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.9);
+    gap: 10px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.95);
 }
 
 .modal-header-plate {
     text-align: center;
     border-bottom: 2px solid rgba(212, 175, 55, 0.35);
-    padding-bottom: 8px;
+    padding-bottom: 6px;
 }
 
 .modal-header-plate h2 {
     font-family: 'Philosopher', serif;
     color: var(--gold-bright);
-    font-size: 20px;
+    font-size: 19px;
 }
 
 .modal-header-plate span {
@@ -359,37 +379,46 @@ body {
     flex-direction: column;
     gap: 4px;
 }
-.setting-block label { font-size: 11px; font-weight: 700; color: var(--gold-bright); }
+.setting-block label { font-size: 10px; font-weight: 700; color: var(--gold-bright); }
 
 .teams-inputs { display: flex; gap: 8px; }
 .teams-inputs input {
     width: 100%; background: #071914; border: 2px solid #7a5c14;
-    color: #fff; padding: 8px; border-radius: 8px; text-align: center; font-weight: 600;
+    color: #fff; padding: 7px; border-radius: 8px; text-align: center; font-weight: 600; font-size: 13px;
 }
 
-.time-shields { display: flex; gap: 8px; }
+.time-shields { display: flex; gap: 6px; }
 .shield-btn {
-    flex: 1; padding: 8px; background: #09221b; border: 2px solid #7a5c14;
-    border-radius: 8px; color: #cbd5e1; font-weight: 800; cursor: pointer;
+    flex: 1; padding: 7px; background: #09221b; border: 2px solid #7a5c14;
+    border-radius: 8px; color: #cbd5e1; font-weight: 800; cursor: pointer; font-size: 12px;
 }
 .shield-btn.active { background: #d4af37; color: #051a14; }
 
-.deck-list, .rules-list { display: flex; flex-direction: column; gap: 6px; list-style: none; }
+.deck-list, .rules-list { display: flex; flex-direction: column; gap: 5px; list-style: none; }
 .deck-item {
-    padding: 9px; background: #082019; border: 1px solid #7a5c14;
+    padding: 8px; background: #082019; border: 1px solid #7a5c14;
     border-radius: 10px; color: #f8fafc; font-weight: 600; text-align: left;
-    cursor: pointer;
+    cursor: pointer; font-size: 13px;
 }
 .deck-item.active { border-color: var(--gold-bright); background: rgba(212, 175, 55, 0.18); }
 .rules-list li { font-size: 12px; line-height: 1.4; color: #e2e8f0; }
 
 .endgame-results {
     font-family: 'Philosopher', serif;
-    font-size: 18px;
+    font-size: 17px;
     text-align: center;
-    padding: 10px;
+    padding: 8px;
     color: var(--gold-bright);
 }
-.modal-buttons-row { display: flex; gap: 10px; }
+.modal-buttons-row { display: flex; gap: 8px; }
 .full-width { width: 100%; }
 .hidden { display: none !important; }
+
+/* Медиа-запрос для компактных телефонов */
+@media (max-height: 640px) {
+    .epic-app { padding: 8px 10px; }
+    .parchment-card { height: 210px; padding: 10px 14px; }
+    .card-word-ing { font-size: 19px; }
+    .forged-btn.btn-img { height: 44px; }
+    .tower-bg-img { height: 46px; }
+}
