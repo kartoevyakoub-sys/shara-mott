@@ -2,9 +2,8 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>ШАЬРА МОТТ — Древний эпос</title>
-    <!-- Официальный скрипт Telegram Mini App -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Philosopher:wght@700&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -12,96 +11,98 @@
 </head>
 <body>
 
-<div class="epic-app">
-    <!-- Угловые орнаменты -->
-    <img src="assets/triskele.png" class="corner-medal top-left" alt="medal">
-    <img src="assets/triskele.png" class="corner-medal top-right" alt="medal">
+<div class="epic-app-wrapper">
+    <div class="epic-app">
+        <!-- Угловые орнаменты -->
+        <img src="assets/triskele.png" class="corner-medal top-left" alt="medal">
+        <img src="assets/triskele.png" class="corner-medal top-right" alt="medal">
 
-    <!-- ВЕРХНЯЯ ШАПКА -->
-    <header class="top-header">
-        <button class="icon-btn img-btn" type="button" onclick="openModal('rules-modal')" title="Правила">
-            <img src="assets/icon-scroll.png" alt="Rules">
-        </button>
-        <h1 class="epic-title">ШАЬРА МОТТ</h1>
-        <button class="icon-btn img-btn" type="button" onclick="openModal('settings-modal')" title="Настройки">
-            <img src="assets/icon-gear.png" alt="Settings">
-        </button>
-    </header>
+        <!-- ВЕРХНЯЯ ШАПКА -->
+        <header class="top-header">
+            <button class="icon-btn img-btn" type="button" onclick="openModal('rules-modal')" title="Правила">
+                <img src="assets/icon-scroll.png" alt="Rules">
+            </button>
+            <h1 class="epic-title">ШАЬРА МОТТ</h1>
+            <button class="icon-btn img-btn" type="button" onclick="openModal('settings-modal')" title="Настройки">
+                <img src="assets/icon-gear.png" alt="Settings">
+            </button>
+        </header>
 
-    <!-- СЧЕТ КОМАНД И БАШНЯ -->
-    <section class="scoreboard-epos">
-        <div class="team-stat active" id="team-panel-0">
-            <span class="team-label" id="team-name-0">Тоаба 1</span>
-            <span class="team-pts" id="score-0">0</span>
-        </div>
+        <!-- СЧЕТ КОМАНД И БАШНЯ -->
+        <section class="scoreboard-epos">
+            <div class="team-stat active" id="team-panel-0">
+                <span class="team-label" id="team-name-0">Тоаба 1</span>
+                <span class="team-pts" id="score-0">0</span>
+            </div>
 
-        <div class="center-tower-timer">
-            <img src="assets/gala.png" class="tower-bg-img" alt="Gala">
-            <div class="timer-badge" id="timer-display">60</div>
-        </div>
+            <div class="center-tower-timer">
+                <img src="assets/gala.png" class="tower-bg-img" alt="Gala">
+                <div class="timer-badge" id="timer-display">60</div>
+            </div>
 
-        <div class="team-stat" id="team-panel-1">
-            <span class="team-label" id="team-name-1">Тоаба 2</span>
-            <span class="team-pts" id="score-1">0</span>
-        </div>
-    </section>
+            <div class="team-stat" id="team-panel-1">
+                <span class="team-label" id="team-name-1">Тоаба 2</span>
+                <span class="team-pts" id="score-1">0</span>
+            </div>
+        </section>
 
-    <!-- ЦЕНТРАЛЬНАЯ КАРТОЧКА -->
-    <main class="card-stage">
-        <img src="assets/triskele.png" class="side-bg-ornament left-orn" alt="ornament">
-        <img src="assets/triskele.png" class="side-bg-ornament right-orn" alt="ornament">
+        <!-- ЦЕНТРАЛЬНАЯ КАРТОЧКА -->
+        <main class="card-stage">
+            <img src="assets/triskele.png" class="side-bg-ornament left-orn" alt="ornament">
+            <img src="assets/triskele.png" class="side-bg-ornament right-orn" alt="ornament">
 
-        <div class="parchment-card" id="game-card" onclick="if(!state.isPlaying) startRound()">
-            <div class="parchment-inner-content">
-                <div id="card-cover" class="card-content">
-                    <img src="assets/gala.png" class="card-tower-img" alt="Tower">
-                    <div class="card-word-ing">ДӀАДОЛАДЕ</div>
-                    <div class="card-word-ru" id="turn-prompt">Ход: Тоаба 1. Нажмите для старта</div>
-                    <div class="card-points-label">СТАРТ РАУНДА</div>
-                </div>
+            <div class="parchment-card" id="game-card" onclick="if(!state.isPlaying) startRound()">
+                <div class="parchment-inner-content">
+                    <div id="card-cover" class="card-content">
+                        <img src="assets/gala.png" class="card-tower-img" alt="Tower">
+                        <div class="card-word-ing">ДӀАДОЛАДЕ</div>
+                        <div class="card-word-ru" id="turn-prompt">Ход: Тоаба 1. Нажмите для старта</div>
+                        <div class="card-points-label">СТАРТ РАУНДА</div>
+                    </div>
 
-                <div id="card-active" class="card-content hidden">
-                    <img src="assets/gala.png" class="card-tower-img" alt="Tower">
-                    <div class="card-word-ing" id="word-ing">ГӀАЛА</div>
-                    <div class="card-word-ru" id="word-ru">Башня</div>
-                    <div class="card-points-label" id="word-pts">+1 БАЛЛ</div>
+                    <div id="card-active" class="card-content hidden">
+                        <img src="assets/gala.png" class="card-tower-img" alt="Tower">
+                        <div class="card-word-ing" id="word-ing">ГӀАЛА</div>
+                        <div class="card-word-ru" id="word-ru">Башня</div>
+                        <div class="card-points-label" id="word-pts">+1 БАЛЛ</div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </main>
+        </main>
 
-    <!-- ПУЛЬТ УПРАВЛЕНИЯ -->
-    <section class="controls-panel">
-        <div class="forged-controls">
-            <button class="forged-btn btn-img btn-team-left" id="btn-team-0" type="button" onclick="scorePoint(0)" disabled>
-                Тоаба 1 (+1)
-            </button>
-            <button class="forged-btn btn-img btn-team-right" id="btn-team-1" type="button" onclick="scorePoint(1)" disabled>
-                Тоаба 2 (+1)
-            </button>
-        </div>
-        <div class="forged-controls">
-            <button class="forged-btn btn-img btn-tekhadita" id="btn-skip" type="button" onclick="scorePoint(null)" disabled>
-                ТӀЕХЬАДИТА (ПРОПУСК)
-            </button>
-            <button class="forged-btn btn-img btn-endgame" type="button" onclick="openModal('endgame-modal')">
-                СОЦАДЕ
-            </button>
-        </div>
-    </section>
+        <!-- ПУЛЬТ УПРАВЛЕНИЯ -->
+        <section class="controls-panel">
+            <div class="forged-controls">
+                <button class="forged-btn btn-img btn-team-left" id="btn-team-0" type="button" onclick="scorePoint(0)" disabled>
+                    Тоаба 1 (+1)
+                </button>
+                <button class="forged-btn btn-img btn-team-right" id="btn-team-1" type="button" onclick="scorePoint(1)" disabled>
+                    Тоаба 2 (+1)
+                </button>
+            </div>
+            <div class="forged-controls">
+                <button class="forged-btn btn-img btn-tekhadita" id="btn-skip" type="button" onclick="scorePoint(null)" disabled>
+                    ТӀЕХЬАДИТА (ПРОПУСК)
+                </button>
+                <button class="forged-btn btn-img btn-endgame" type="button" onclick="openModal('endgame-modal')">
+                    СОЦАДЕ
+                </button>
+            </div>
+        </section>
 
-    <!-- НИЖНЯЯ ПАНЕЛЬ НАВИГАЦИИ -->
-    <nav class="bottom-nav">
-        <button class="nav-icon-btn img-btn" type="button" onclick="openModal('decks-modal')" title="Темы слов">
-            <img src="assets/icon-scroll.png" alt="Decks">
-        </button>
-        <button class="nav-icon-btn img-btn" type="button" onclick="openModal('settings-modal')" title="Параметры">
-            <img src="assets/icon-sliders.png" alt="Sliders">
-        </button>
-        <button class="nav-icon-btn img-btn" type="button" id="quick-sound-btn" onclick="toggleMute()" title="Звук">
-            <img src="assets/icon-bell.png" alt="Sound">
-        </button>
-    </nav>
+        <!-- НИЖНЯЯ ПАНЕЛЬ НАВИГАЦИИ -->
+        <nav class="bottom-nav">
+            <button class="nav-icon-btn img-btn" type="button" onclick="openModal('decks-modal')" title="Темы слов">
+                <img src="assets/icon-scroll.png" alt="Decks">
+            </button>
+            <button class="nav-icon-btn img-btn" type="button" onclick="openModal('settings-modal')" title="Параметры">
+                <img src="assets/icon-sliders.png" alt="Sliders">
+            </button>
+            <button class="nav-icon-btn img-btn" type="button" id="quick-sound-btn" onclick="toggleMute()" title="Звук">
+                <img src="assets/icon-bell.png" alt="Sound">
+            </button>
+        </nav>
+    </div>
 </div>
 
 <!-- МОДАЛЬНЫЕ ОКНА -->
